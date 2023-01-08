@@ -1,0 +1,150 @@
+<?php
+require 'sqlmyadmin.php';
+if(!empty($_SESSION["id"])){
+  header("Location: index.php");
+}
+if(isset($_POST["submit2"])){
+  $kullaniciadi = $_POST["kullaniciadi"];
+  $meslek = $_POST["meslek"];
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  $confirmpassword = $_POST["confirmpassword"];
+  $duplicate = mysqli_query($conn, "SELECT * FROM tb_user WHERE username = '$username' OR email = '$email'");
+  if(mysqli_num_rows($duplicate) > 0){
+    echo
+    "<script> alert('Username or Email Has Already Taken'); </script>";
+  }
+  else{
+    if($password == $confirmpassword){
+      $query = "INSERT INTO tb_user VALUES('','$username','$email','$password','$kullaniciadi','$meslek')";
+      mysqli_query($conn, $query);
+      echo
+      "<script> alert('Registration Successful'); </script>";
+    }
+    else{
+      echo
+      "<script> alert('Password Does Not Match'); </script>";
+    }
+  }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form>
+              <div><h1>Hesap Oluştur</h1></div>
+		<div>	
+      <label for="kullaniciadi"> Ad ve Soyad </label>
+      <input type="text" name="kullaniciadi" id = "kullaniciadi" required value=""> <br>
+	  </div>
+	  <div>	
+      <label for="meslek"> Meslek </label>
+      <input type="text" name="meslek" id = "meslek" required value=""> <br>
+	  </div>
+	  <div>
+      <label for="username"> Kullanıcı Adı </label>
+      <input type="text" name="username" id = "username" required value=""> <br>
+	  </div>
+	  <div>
+      <label for="email"> Email </label>
+      <input type="email" name="email" id = "email" required value=""> <br>
+	  </div>
+	  <div>
+      <label for="password"> Şifre </label>
+      <input type="password" name="password" id = "password" required value=""> <br>
+	  </div>
+	  <div>
+      <label for="confirmpassword"> Şifreyi Tekrarlayın </label>
+      <input type="password" name="confirmpassword" id = "confirmpassword" required value=""> <br>
+	  </div>
+	  <div>
+      <button type="submit" class="btn btn-default submit" name="submit2"> Kayıt </button>
+	  </form>
+				
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">New to site?
+                  <a href="#signup" class="to_register"> Create Account </a>
+                </p>
+<div>
+                <button type="submit" class="btn btn-default submit" href="login.php" > Geri </button>
+				
+                <a class="reset_pass" href="#">Lost your password?</a>
+              </div>
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4 template. Privacy and Terms</p>
+                </div>
+              </div>
+            
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form class="" action="" method="post" autocomplete="off">
+			
+	  
+	  
+    </form>
+    <br>
+    <br>
+    <a href="#signin" class="to_register">Login</a>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Already a member ?
+                  <a href="#signin" class="to_register"> Log in </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4 template. Privacy and Terms</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
